@@ -38,7 +38,8 @@
               "RelativeToolTip": "BDDSpecFlow.Tests\\StepDefinitions\\Steps.cs",
               "ViewState": "AQIAAIAAAAAAAAAAAADwv50AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T17:17:08.439Z"
+              "WhenOpened": "2024-04-22T17:17:08.439Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -63,7 +64,8 @@
               "RelativeToolTip": "BDDSpecFlow.Tests\\Hooks.cs",
               "ViewState": "AQIAABQAAAAAAAAAAAAQwCQAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T17:10:15.275Z"
+              "WhenOpened": "2024-04-22T17:10:15.275Z",
+              "EditorCaption": ""
             }
           ]
         }
