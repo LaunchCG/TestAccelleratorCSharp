@@ -474,15 +474,11 @@ namespace Common.TestFramework.Core
             if (iLen == 0 || iLen == 1)
             {
                 var sIndexPath = System.AppDomain.CurrentDomain.BaseDirectory.ToString().IndexOf(@"bin");
-                // System.AppDomain.CurrentDomain.BaseDirectory.Substring(0, System.AppDomain.CurrentDomain.BaseDirectory.ToString().IndexOf("bin"));
-
-
+                
                 sCurrentDir = sIndexPath == -1
                     ? AppDomain.CurrentDomain.BaseDirectory
                     : System.AppDomain.CurrentDomain.BaseDirectory.Substring(0, sIndexPath);
-
-                //sCurrentDir = System.AppDomain.CurrentDomain.BaseDirectory.Replace(@"/bin",string.Empty);//.Substring(0, System.AppDomain.CurrentDomain.BaseDirectory.ToString().IndexOf("bin"));
-                //sCurrentDir = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.ToString().IndexOf("PyramidNunitFramework"));
+                
                 sCurrentExePath = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + @"\";
             }
             else
@@ -711,7 +707,7 @@ namespace Common.TestFramework.Core
             string fromEmailAddress = dicConfig["fromEmailAddress"];
             string fromEmailPassword = dicConfig["fromEmailPassword"];
             //string toEmailAddress = dicConfig["toEmailAddress"];
-            string toEmailAddress = "sanbalagan@triseptsolutions.com,sanbalagan@launchcg.com";
+            string toEmailAddress = "sanbalagan@launchcg.com";
             string smtpClient = dicConfig["smtpClient"];
             int smtpPort = Convert.ToInt32(dicConfig["smtpPort"]);
             //string mailSubject = dicConfig["mailSubject"];
@@ -834,208 +830,7 @@ namespace Common.TestFramework.Core
             }
         }
 
-        public static void SaveToEmailQueue1(int totalExcecuted, int totalPassed, int totalFailed, int totalNoRun)
-        {
-            int TotalTCs = Reports.iPassTotalCount + Reports.iFailTotalCount;
-            string mailBody = string.Empty;
-            string spName = "EmailQueueInsProc";
-            string connString = "data source=LISDLKSQLAG01.LABKRONOS.local; initial catalog=EnterpriseEmailQueue; Integrated Security=True";
-            string mailSubject = dicConfig["strEnvironment"] + " - " + dicConfig["ProjectName"] + " " + "Automation Summary Report" + " (" + dicConfig["TestProjectName"] + ")";
-            DateTime timeStampConvert = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
-            string fromEmailAddress = "testautomation@triseptsolutions.com";
-            string toEmailAddress = "sanbalagan@triseptsolutions.com,dhall@triseptsolutions.com,akristian@triseptsolutions.com,dmasterson@triseptsolutions.com";
-
-            if (dicConfig["ProjectName"].Contains("WebServices"))
-            {
-                string strMediaAssetBaseURL = GenericClass.dicApplicationUrl["mediaAssetBaseURL"];
-                string strResourceURLHotelImages = GenericClass.dicApplicationUrl["resourceUrlHotelImages"];
-
-                string URI = string.Concat(strMediaAssetBaseURL, strResourceURLHotelImages);
-
-                if (TotalTCs == 1)
-                {
-                    mailBody = "<font face=\"Calibri\" size=\"2\">Dear all,<br><br>Please find below the Automation Execution Summary.<br><br>" +
-                    "<font face=\"Calibri\" size=\"2\">Enviroment - " + dicConfig["strEnvironment"] + "" +
-                    "<font face=\"Calibri\" size=\"2\"><br><br>URI - " + URI + "<br><br>" +
-                    "<font face=\"Calibri\"" +
-                        "<table border=2>" + //<table border=\"2\">
-                        "<th border=\"2\" colspan=\"4\" bgcolor=\"#d3d3d3\" font=\"Calibri\" size=\"2\">Automation Execution Status</th>" +
-                        " <tr> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Test Suite</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Passed</th>  " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Failed</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Total</th> " +
-                        "</tr> " +
-                    "<tr>" +
-                        //"<td align=\"Center\" font=\"Calibri\">" + dicReporting["tempFolder"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\">" + GenericClass.dicDict["TestCaseName"] + "</td> " +
-                        //"<td align=\"Center\" font=\"Calibri\" size=\"2\">" + GenericClass.dicConfig["TestProjectName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "<tr>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + "Total" + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "</table><font>" +
-                    "<br><br>Thanks,<br>SherpaBookingApp2 Automation Team<br><br>Note:- This is auto generated message and please do not respond.</font>";
-                }
-                else
-                {
-                    mailBody = "<font face=\"Calibri\" size=\"2\">Dear all,<br><br>Please find below the Automation Execution Summary.<br><br>" +
-                    "<font face=\"Calibri\" size=\"2\">Enviroment - " + dicConfig["strEnvironment"] + "" +
-                    "<font face=\"Calibri\" size=\"2\"><br><br>URI - " + URI + "<br><br>" +
-                    "<font face=\"Calibri\"" +
-                        "<table border=2>" + //<table border=\"2\">
-                        "<th border=\"2\" colspan=\"4\" bgcolor=\"#d3d3d3\" font=\"Calibri\" size=\"2\">Automation Execution Status</th>" +
-                        " <tr> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Test Suite</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Passed</th>  " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Failed</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Total</th> " +
-                        "</tr> " +
-                    "<tr>" +
-                        //"<td align=\"Center\" font=\"Calibri\">" + dicReporting["tempFolder"] + "</td> " +
-                        //"<td align=\"Center\" font=\"Calibri\">" + GenericClass.dicDict["TestCaseName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + GenericClass.dicConfig["TestProjectName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "<tr>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + "Total" + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "</table><font>" +
-                    "<br><br>Thanks,<br>SherpaBookingApp2 Automation Team<br><br>Note:- This is auto generated message and please do not respond.</font>";
-                }
-
-
-            }
-            else
-            {
-                if (TotalTCs == 1)
-                {
-                    mailBody = "<font face=\"Calibri\" size=\"2\">Dear all,<br><br>Please find below the Automation Execution Summary.<br><br>" +
-                    "<font face=\"Calibri\"" +
-                        "<table border=2>" + //<table border=\"2\">
-                        "<th border=\"2\" colspan=\"4\" bgcolor=\"#d3d3d3\" font=\"Calibri\" size=\"2\">Automation Execution Status</th>" +
-                        " <tr> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Test Suite</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Passed</th>  " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Failed</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Total</th> " +
-                        "</tr> " +
-                    "<tr>" +
-                        //"<td align=\"Center\" font=\"Calibri\">" + dicReporting["tempFolder"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\">" + GenericClass.dicDict["TestCaseName"] + "</td> " +
-                        //"<td align=\"Center\" font=\"Calibri\" size=\"2\">" + GenericClass.dicConfig["TestProjectName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "<tr>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + "Total" + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "</table><font>" +
-                    "<br><br>Thanks,<br>SherpaBookingApp2 Automation Team<br><br>Note:- This is auto generated message and please do not respond.</font>";
-                }
-                else
-                {
-                    mailBody = "<font face=\"Calibri\" size=\"2\">Dear all,<br><br>Please find below the Automation Execution Summary.<br><br>" +
-                    "<font face=\"Calibri\"" +
-                        "<table border=2>" + //<table border=\"2\">
-                        "<th border=\"2\" colspan=\"4\" bgcolor=\"#d3d3d3\" font=\"Calibri\" size=\"2\">Automation Execution Status</th>" +
-                        " <tr> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Test Suite</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Passed</th>  " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Failed</th> " +
-                            "<th align=\"Center\" font=\"Calibri\" size=\"2\">Total</th> " +
-                        "</tr> " +
-                    "<tr>" +
-                        //"<td align=\"Center\" font=\"Calibri\">" + dicReporting["tempFolder"] + "</td> " +
-                        //"<td align=\"Center\" font=\"Calibri\">" + GenericClass.dicDict["TestCaseName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + GenericClass.dicConfig["TestProjectName"] + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "<tr>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + "Total" + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalPassed + "</td> " +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalFailed + "</td>" +
-                        "<td align=\"Center\" font=\"Calibri\" size=\"2\">" + totalExcecuted + "</td>" +
-                        "</tr>" +
-                    "</table><font>" +
-                    "<br><br>Thanks,<br>SherpaBookingApp2 Automation Team<br><br>Note:- This is auto generated message and please do not respond.</font>";
-                }
-
-
-            }
-
-
-            mailBody = "<HTML><BODY><TABLE BORDER=.1>" + mailBody + "</TABLE></BODY></HTML>";
-
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                using (SqlCommand cmd = new SqlCommand(spName, conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.Add(new SqlParameter("@Status", 'A'));
-                    cmd.Parameters.Add(new SqlParameter("@Type", "TestAutomation"));
-                    cmd.Parameters.Add(new SqlParameter("@FromAddress", fromEmailAddress));
-                    cmd.Parameters.Add(new SqlParameter("@ToAddresses", toEmailAddress));
-                    cmd.Parameters.Add(new SqlParameter("@CCAddresses", ""));
-                    cmd.Parameters.Add(new SqlParameter("@Subject", mailSubject));
-                    cmd.Parameters.Add(new SqlParameter("@ReservationId", ""));
-                    cmd.Parameters.Add(new SqlParameter("@EmailBody", mailBody));
-                    cmd.Parameters.Add(new SqlParameter("@SendTimestamp", timeStampConvert));
-                    cmd.Parameters.Add(new SqlParameter("@Priority", "1"));
-                    cmd.Parameters.Add(new SqlParameter("@IsBodyHtml", "1"));
-                    cmd.Parameters.Add(new SqlParameter("@BCCAddress", ""));
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /*''@##########################################################################################################################
-        ''@Function ID: 
-        ''@Function Name: PerformActionOnAlert
-        ''@Objective: This functions perform action on alert
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@Param Name: strOutText (Output)
-        ''@Param Desc: Output parameter returns alert text
-        ''@Param Name: action          
-        ''@Param Desc: perform action like Click "OK", "Cancel" and "GetText"
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@Return Desc: 
-        ''@     Success - True
-        ''@     Failure - False
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@Example: blnStatus= PerformActionOnAlert("Ok");
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@Created by[Date]: Kamlesh Kumar Yadav [June 16th, 2015]
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@Reviewed by[Date]: 
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@History Notes: 
-        ''@---------------------------------------------------------------------------------------------------------------------------
-        ''@########################################################################################################################### */
-        /// <summary>
-        /// Perform action on Alert and (Valid values are 'OK', Cancel, GetText )
-        /// Function call :- TestGenericUtility.PerformActionOnAlert("OK", out OutText);      
-        /// </summary>
-        /// <returns></returns>
+        
         public static bool PerformActionOnAlert(string action, out string strOutText)
         {
             bool blnFlag = true;
@@ -1078,7 +873,7 @@ namespace Common.TestFramework.Core
 
         }
 
-        #region Copied from Utilities.cs
+        #region Utility functions
 
         public static class SortTools
         {
@@ -1416,31 +1211,4 @@ namespace Common.TestFramework.Core
         #endregion
 
     }
-
-
-    /*    public class ScreenShotRemoteWebDriver : RemoteWebDriver, IWebDriver, ITakesScreenshot
-        {
-            public ScreenShotRemoteWebDriver(Uri RemoteAdress, ICapabilities capabilities)
-                : base(RemoteAdress, capabilities)
-            {
-
-            }
-
-
-            /// <summary> 
-            /// Gets a <see cref="Screenshot"/> object representing the image of the page on the screen. 
-            /// </summary> 
-            /// <returns>A <see cref="Screenshot"/> object containing the image.</returns> 
-            //Earlier public Screenshot GetScreehshot()
-            public new Screenshot GetScreenshot()
-            {
-                // Get the screenshot as base64. 
-                Response screenshotResponse = this.Execute(DriverCommand.Screenshot, null);
-                string base64 = screenshotResponse.Value.ToString();
-
-                // ... and convert it. 
-                return new Screenshot(base64);
-            }
-
-        }*/
 }

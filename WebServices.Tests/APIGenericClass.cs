@@ -63,17 +63,6 @@ namespace  WebServices.Tests
                 objParam.APIGetUsersTest(APIAddParamUtility.pageNum, restRequest);
             }
 
-            /*if (GenericClass.dicDict["TestCaseName"].Equals("TCPWidenAPI_GetAll_MediaAssets_Based_on_ComponentCode"))
-            {
-                objParam.TCPWidenAPIGetAll(APIAddParamUtility.componentCode, restRequest);
-            }
-
-            if (GenericClass.dicDict["TestCaseName"].Equals("FeatureImage_GET_Image_URL"))
-            {
-                objParam.APIFeatureImageGet(APIAddParamUtility.remoteSourceCode, APIAddParamUtility.featureCode, restRequest);
-            }*/
-
-
             restRequest.RequestFormat = DataFormat.Json;
             return restRequest;
         }
@@ -142,12 +131,7 @@ namespace  WebServices.Tests
             SetAuthorization(auth, restRequest);
             //restRequest.AddHeader("Content-Type", "application/json; charset=utf-8");
             //restRequest.AddHeader("Accept", "application/json");
-            AddAdditionalHeaders(restRequest);
-            //AddAdditionalHeaders();
-            /*if (GenericClass.dicDict["TestCaseName"].Equals("RSSQLRestService_PUT_UpdateUser"))
-            {
-                objParam.AddParamsuserid(APIAddParamUtility.userID, restRequest);
-            }*/
+            AddAdditionalHeaders(restRequest);  
             restRequest.AddJsonBody(jBody);           
             restRequest.RequestFormat = DataFormat.Json;
             return restRequest;
@@ -155,60 +139,5 @@ namespace  WebServices.Tests
            
         }
 
-        public string GenerateDynamicTokenRSSQLRest()
-        {
-            string UserName = "AccutracIntegrationUser";
-            string Password = "QASecret";
-            string jsonData = "{\"userName\": \"" + UserName + "\",\"password\": \"" + Password + "\"}";
-
-            restClient = new RestClient();
-            restRequest = new RestRequest("url");
-            //restClient.Post(restRequest);
-
-            restRequest.AddHeader("Content-Type", "application/json");
-            restRequest.AddJsonBody(jsonData);
-            IRestResponse restResp = restClient.Post(restRequest);
-
-            if (restResp.IsSuccessful)
-            {
-                Console.WriteLine("Status code: " + restResp.StatusCode);
-                Console.WriteLine("Response Content: " + restResp.Content);
-            }
-
-            return restResp.Content;
-        }
-
-        public string ImageUploadUrl()
-        {
-            restClient = new RestClient();
-            string url = "https://localhost:44369/WidenAsset/TestUploadAssetFromUrl";
-            url = url + "?" + "url=http://images.triseptsolutions.com/Hotels/HbsImg/42992/slideshow/42992_m01.jpg";
-            restRequest = new RestRequest(url);
-            //restClient.Post(restRequest);
-            //restRequest.AddHeader("Authorization", "bearer trisept/06f048232db05b17fc8dd994f1eefae0");
-            //restRequest.AddHeader("Content-Type", "multipart/form-data");
-            //restRequest.AddHeader("Content-Type", "image/png");
-            //restRequest.AddHeader("Accept", "application/json");
-            //restRequest.AddParameter("url", @"http://images.triseptsolutions.com/Hotels/HbsImg/42992/slideshow/42992_m01.jpg");
-            //restRequest.AddParameter("url", "http%3A%2F%2Fimages.triseptsolutions.com%2FHotels%2FHbsImg%2F42992%2Fslideshow%2F42992_m01.jpg");
-            restRequest.AddParameter("filename", "");
-            //restRequest.AddJsonBody(jsonData);
-            //restRequest.RequestFormat = DataFormat.Json;
-            IRestResponse restResp = restClient.Post(restRequest);
-
-            if (restResp.IsSuccessful)
-            {
-                Console.WriteLine("Status code: " + restResp.StatusCode);
-                Console.WriteLine("Response Content: " + restResp.Content);
-            }
-            else
-            {
-                Console.WriteLine("Error exception: " + restResp.Content);
-                Console.WriteLine("Error Message: " + restResp.ErrorMessage);
-                Console.WriteLine("Error exception: " + restResp.ErrorException);
-            }
-
-            return restResp.Content;
-        }
     }
 }

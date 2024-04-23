@@ -57,8 +57,7 @@ namespace  Common.TestFramework.Core
             //Added code for sending email summary
             if (GenericClass.dicConfig["SendSummaryMail"].ToLower().Contains("yes"))
             {
-                //GenericClass.SendSummaryStatusMail((GenericClass.dicReporting["SummaryReportPath"]), (Reports.iPassTotalCount + Reports.iFailTotalCount), Reports.iPassTotalCount, Reports.iFailTotalCount, Reports.iNoRunTotalCount);
-                GenericClass.SaveToEmailQueue1((Reports.iPassTotalCount + Reports.iFailTotalCount), Reports.iPassTotalCount, Reports.iFailTotalCount, Reports.iNoRunTotalCount);
+                GenericClass.SendSummaryStatusMail((GenericClass.dicReporting["SummaryReportPath"]), (Reports.iPassTotalCount + Reports.iFailTotalCount), Reports.iPassTotalCount, Reports.iFailTotalCount, Reports.iNoRunTotalCount);                
             }
 
             GenericClass.dicMaster.Clear();
