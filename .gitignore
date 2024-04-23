@@ -332,3 +332,9 @@ ASALocalRun/
 
 # Siva Manual
 .vs/
+*.vsidx
+*FileListAbsolute.txt
+*.cache
+*000.testlog
+*DocumentLayout.json
+*v17/.suo
